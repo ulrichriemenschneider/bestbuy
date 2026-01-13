@@ -1,4 +1,5 @@
 class Product:
+    """Class for initializing products with some example functions and methods"""
 
     def __init__(self, name, price, quantity):
         """Initializes a new Product instance."""

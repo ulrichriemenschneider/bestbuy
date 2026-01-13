@@ -1,7 +1,5 @@
-import products
-
-
 class Store:
+    """Class for initializing a store with some example functions and methods"""
 
     def __init__(self, product_list):
         """Initializes a new Store instance."""
@@ -31,11 +29,12 @@ class Store:
         """Returns all products in the store that are active."""
         active_list = []
         for product in self.product_list:
-            if product.active == True:
+            if product.active:
                 active_list.append(product)
         return active_list
 
-    def order(self, shopping_list) -> float:
+    @staticmethod
+    def order(shopping_list) -> float:
         """Receives a list of tuples, each tuple containing two elements:
         Product (product class) and quantity (int).
         Purchases the products and returns the total price of the order."""

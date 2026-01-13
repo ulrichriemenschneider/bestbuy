@@ -70,8 +70,8 @@ def start(best_buy):
                 try:
                     result = best_buy.order(shopping_list)
                     print(f"\n{result}")
-                except Exception as e:
-                    print(f"Error processing order: {e}")
+                except Exception as exc:
+                    print(f"Error processing order: {exc}")
             else:
                 print("Order cancelled (empty list).")
 

@@ -4,16 +4,21 @@ import products
 class Store:
 
     def __init__(self, product_list):
+        """Initializes a new Store instance."""
         self.product_list = product_list
 
     def add_product(self, product):
         """Adds a product to the store."""
         self.product_list.append(product)
+        print("Product added to the store.")
 
     def remove_product(self, product):
         """Removes a product from the store."""
         if product in self.product_list:
             self.product_list.remove(product)
+            print("Product removed from the store.")
+        else:
+            print("Product could not be found!!!")
 
     def get_total_quantity(self) -> int:
         """Returns the total number of items available in the store."""
@@ -38,18 +43,4 @@ class Store:
         for product, quantity in shopping_list:
             product.buy(quantity)
             total_price += product.price * quantity
-        return f"Order cost: {total_price} dollars."
-
-
-product_list = [
-    products.Product("MacBook Air M2", price=1450, quantity=100),
-    products.Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-    products.Product("Google Pixel 7", price=500, quantity=250),
-]
-
-best_buy = Store(product_list)
-products = best_buy.get_all_products()
-print([(products[0], 1), (products[1], 2)])
-print(best_buy.get_total_quantity())
-print(best_buy.order([(products[0], 1), (products[1], 2)]))
-print(best_buy.get_total_quantity())
+        return f"Order made! Order cost: ${total_price:.2f}."

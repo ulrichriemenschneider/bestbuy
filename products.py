@@ -1,49 +1,39 @@
 class Product:
 
     def __init__(self, name, price, quantity):
-        self.name = Product.check_valid_name(name)
-        self.price = Product.check_valid_price(price)
-        self.quantity = Product.check_valid_quantity(quantity)
+        self.name = self.check_valid_name(name)
+        self.price = self.check_valid_price(price)
+        self.quantity = self.check_valid_quantity(quantity)
         self.active = True
 
+    @staticmethod
     def check_valid_name(name) -> str:
-        if name != "":
+        if name and name.strip():
             return name
         else:
-            raise ValueError("NameError")
+            raise ValueError("Name cannot be empty")
 
+    @staticmethod
     def check_valid_price(price) -> float:
-        try:
-            if type(price) is float and price > 0:
-                return price
-            elif type(price) is int and price > 0:
-                return float(price)
-            else:
-                raise ValueError("PriceError")
-        except ValueError:
-            print("ValueError for price!")
+        if isinstance(price, (int, float)) and price >= 0:
+            return float(price)
+        else:
+            raise ValueError("Price must be a non-negative number")
 
+    @staticmethod
     def check_valid_quantity(quantity) -> int:
-        try:
-            if type(quantity) is int and quantity >= 0:
-                return int(quantity)
-            else:
-                raise ValueError("QuantityError")
-        except ValueError:
-            print("ValueError for quantity!")
+        if isinstance(quantity, int) and quantity >= 0:
+            return quantity
+        else:
+            raise ValueError("Quantity must be a non-negative integer")
 
     def set_quantity(self, quantity):
-        try:
-            if quantity == 0:
-                self.deactivate()
-                self.quantity = 0
-            if quantity > 0 and self.is_active():
-                self.quantity = quantity
-            else:
-                self.quantity = quantity
-                self.active = True
-        except:
-            raise ValueError("Wrong type of value")
+        new_quantity = self.check_valid_quantity(quantity)
+        self.quantity = new_quantity
+        if self.quantity == 0:
+            self.deactivate()
+        else:
+            self.activate()
 
     def get_quantity(self) -> int:
         return self.quantity
@@ -61,17 +51,24 @@ class Product:
         print(f"{self.name}, Price: {self.price}, Quantity: {self.quantity}")
 
     def buy(self, quantity):
-        Product.check_valid_quantity(quantity)
-        self.set_quantity(self.quantity + quantity)
-        return f"Total price: {self.price * quantity}"
+        buy_quantity = self.check_valid_quantity(quantity)
+        self.set_quantity(self.quantity + buy_quantity)
+        return f"Total price: {self.price * buy_quantity}"
 
 
 def main():
-    product_list = [
-        Product("MacBook Air M2", price=1450, quantity=100),
-        Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-        Product("Google Pixel 7", price=500, quantity=250),
-    ]
+    bose = Product("Bose QuietComfort Earbuds", price=250, quantity=500)
+    mac = Product("MacBook Air M2", price=1450, quantity=100)
+
+    print(bose.buy(50))
+    print(mac.buy(100))
+    print(mac.is_active())
+
+    bose.show()
+    mac.show()
+
+    bose.set_quantity(1000)
+    bose.show()
 
 
 if __name__ == "__main__":

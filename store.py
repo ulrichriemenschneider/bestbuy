@@ -40,6 +40,5 @@ class Store:
         Purchases the products and returns the total price of the order."""
         total_price = 0.0
         for product, quantity in shopping_list:
-            product.buy(quantity)
-            total_price += product.price * quantity
-        return f"Order made! Order cost: ${total_price:.2f}."
+            total_price += product.buy(quantity)
+        return total_price

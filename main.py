@@ -22,7 +22,7 @@ def start(best_buy):
             all_products = best_buy.get_all_products()
             print("\n------ Products ------")
             for product in all_products:
-                product.show()
+                print(product.show())
             print("----------------------")
 
         elif choice == 2:

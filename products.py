@@ -58,12 +58,14 @@ class Product:
         return self.active
 
     def show(self):
-        """Prints the details of the product."""
-        print(f"{self.name}, Price: {self.price}, Quantity: {self.quantity}")
+        """Returns product details as a formatted string."""
+        return f"{self.name}, Price: {self.price}, Quantity: {self.quantity}"
 
-    def buy(self, quantity):
+    def buy(self, quantity) -> float:
         """Buys a given quantity of the product.
         Updates the total quantity and returns the total price of the added items."""
         buy_quantity = self.check_valid_quantity(quantity)
-        self.set_quantity(self.quantity + buy_quantity)
-        return f"Total price: {self.price * buy_quantity}"
+        if buy_quantity > self.quantity:
+            raise ValueError("Requested quantity exceeds available quantity")
+        self.set_quantity(self.quantity - buy_quantity)
+        return self.price * buy_quantity
